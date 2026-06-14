@@ -1,0 +1,82 @@
+<div class="app-shell">
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-left">
+      <dx-button
+        icon="menu"
+        stylingMode="text"
+        class="menu-btn"
+        (onClick)="toggleDrawer()">
+      </dx-button>
+      <img src="assets/images/BRIMS_logo.png" alt="BRIMS" class="brims-logo" />
+    </div>
+    <div class="header-right">
+      <span class="username">Mark</span>
+      <div class="avatar-circle">
+        <i class="dx-icon dx-icon-user"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── DRAWER + CONTENT ───────────────────────────────── -->
+  <div class="drawer-area">
+    <dx-drawer
+      [(opened)]="drawerOpen"
+      openedStateMode="shrink"
+      position="left"
+      revealMode="slide"
+      [closeOnOutsideClick]="false"
+      class="app-drawer">
+
+      <!-- SIDEBAR PANEL -->
+      <div *dxTemplate="let data of 'panel'" class="sidebar-panel">
+        <dx-tree-view
+          [items]="navItems"
+          keyExpr="id"
+          displayExpr="text"
+          itemsExpr="items"
+          selectedExpr="selected"
+          [selectByClick]="true"
+          selectionMode="single"
+          expandEvent="click"
+          itemTemplate="navItem"
+          (onItemClick)="onNavItemClick($event)"
+          class="nav-tree">
+
+          <div *dxTemplate="let item of 'navItem'" class="nav-tree-item">
+            <i *ngIf="item.icon"
+               class="dx-icon dx-icon-{{ item.icon }} nav-item-icon">
+            </i>
+            <span class="nav-item-text">{{ item.text }}</span>
+          </div>
+
+        </dx-tree-view>
+      </div>
+
+      <!-- MAIN SCROLLABLE CONTENT -->
+      <dx-scroll-view class="main-scroll-view" [showScrollbar]="'onHover'">
+        <div class="main-content">
+
+          <!-- Dashboard cards shown at /dashboard -->
+          <div class="status-grid" *ngIf="isDashboardRoute">
+            <div
+              class="status-card"
+              *ngFor="let card of statusCards"
+              [ngClass]="card.colorClass"
+              (click)="onCardClick(card)">
+              <div class="card-label">{{ card.label }}</div>
+              <div class="card-count">{{ card.count }}</div>
+            </div>
+          </div>
+
+          <!-- Child routes (product-registration, medical-devices etc.) -->
+          <router-outlet></router-outlet>
+
+        </div>
+      </dx-scroll-view>
+
+    </dx-drawer>
+  </div>
+
+</div>

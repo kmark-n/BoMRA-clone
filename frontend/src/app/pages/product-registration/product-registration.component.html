@@ -1,0 +1,205 @@
+<div class="pr-page">
+
+  <!-- Toolbar row -->
+  <div class="page-toolbar">
+    <dx-button
+      text="Initiate Application"
+      type="default"
+      stylingMode="contained"
+      class="initiate-btn"
+      (onClick)="openInitiateForm()">
+    </dx-button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-wrap" *ngIf="isLoading">
+    <dx-load-indicator [visible]="true"></dx-load-indicator>
+  </div>
+
+  <!-- DxDataGrid -->
+  <dx-data-grid
+    [dataSource]="applications"
+    [showBorders]="true"
+    [showRowLines]="true"
+    [showColumnLines]="true"
+    [rowAlternationEnabled]="false"
+    [hoverStateEnabled]="true"
+    [columnAutoWidth]="true"
+    [wordWrapEnabled]="false"
+    noDataText="No applications yet. Click 'Initiate Application' to get started."
+    class="apps-grid">
+
+    <!-- Search panel -->
+    <dxo-search-panel [visible]="true" placeholder="Search..."></dxo-search-panel>
+
+    <!-- Columns -->
+    <dxi-column dataField="brand_name"         caption="Brand Name"         [minWidth]="160"></dxi-column>
+    <dxi-column dataField="atc_code"           caption="ATC Code"           [minWidth]="120"></dxi-column>
+    <dxi-column dataField="manufacturing_site" caption="Manufacturing Site" [minWidth]="180"></dxi-column>
+    <dxi-column dataField="status"             caption="Status"             [minWidth]="120"
+      cellTemplate="statusCell">
+    </dxi-column>
+    <dxi-column dataField="created_at" caption="Date Submitted" dataType="date" [minWidth]="140"></dxi-column>
+
+    <!-- Status badge template -->
+    <div *dxTemplate="let cell of 'statusCell'">
+      <span class="status-badge" [ngClass]="'badge--' + (cell.value || 'DRAFTS').toLowerCase().replace(' ', '-')">
+        {{ cell.value || 'DRAFTS' }}
+      </span>
+    </div>
+
+    <!-- Actions column -->
+    <dxi-column caption="" [width]="90" [allowSorting]="false" cellTemplate="actionsCell"></dxi-column>
+    <div *dxTemplate="let cell of 'actionsCell'" class="row-actions">
+      <button class="action-btn edit-btn" title="Edit" (click)="openEditForm(cell.data)">
+        <i class="dx-icon dx-icon-edit"></i>
+      </button>
+      <button class="action-btn delete-btn" title="Delete" (click)="deleteApplication(cell.data)">
+        <i class="dx-icon dx-icon-trash"></i>
+      </button>
+    </div>
+
+  </dx-data-grid>
+
+
+  <!-- ── INITIATE POPUP ───────────────────────── -->
+  <dx-popup
+    [(visible)]="initiateVisible"
+    [width]="620"
+    [height]="'auto'"
+    title="Initiate Product Application"
+    [showCloseButton]="true"
+    [dragEnabled]="false">
+    <div *dxTemplate="let data of 'content'" class="popup-content">
+
+      <div class="form-field">
+        <label>Brand Name <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="initiateForm.brand_name"
+          placeholder="Enter brand name"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="form-field">
+        <label>ATC Code <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="initiateForm.atc_code"
+          placeholder="Enter ATC code"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="form-field">
+        <label>Manufacturing Site <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="initiateForm.manufacturing_site"
+          placeholder="Enter manufacturing site"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="popup-actions">
+        <dx-button
+          text="Save Product Application"
+          type="success"
+          stylingMode="contained"
+          (onClick)="saveApplication()"
+          [disabled]="isSaving"
+          width="220">
+        </dx-button>
+        <dx-button
+          text="Cancel"
+          type="normal"
+          stylingMode="outlined"
+          (onClick)="initiateVisible = false"
+          width="100">
+        </dx-button>
+      </div>
+
+      <div class="saving-wrap" *ngIf="isSaving">
+        <dx-load-indicator [visible]="true"></dx-load-indicator>
+        <span>Saving...</span>
+      </div>
+
+    </div>
+  </dx-popup>
+
+
+  <!-- ── EDIT POPUP ───────────────────────────── -->
+  <dx-popup
+    [(visible)]="editVisible"
+    [width]="620"
+    [height]="'auto'"
+    title="Edit Product Application"
+    [showCloseButton]="true"
+    [dragEnabled]="false">
+    <div *dxTemplate="let data of 'content'" class="popup-content">
+
+      <div class="form-field">
+        <label>Brand Name <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="editForm.brand_name"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="form-field">
+        <label>ATC Code <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="editForm.atc_code"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="form-field">
+        <label>Manufacturing Site <span class="required">*</span></label>
+        <dx-text-box
+          [(value)]="editForm.manufacturing_site"
+          stylingMode="outlined"
+          width="100%">
+        </dx-text-box>
+      </div>
+
+      <div class="popup-actions">
+        <dx-button
+          text="Save Changes"
+          type="success"
+          stylingMode="contained"
+          (onClick)="updateApplication()"
+          [disabled]="isSaving"
+          width="160">
+        </dx-button>
+        <dx-button
+          text="Cancel"
+          type="normal"
+          stylingMode="outlined"
+          (onClick)="editVisible = false"
+          width="100">
+        </dx-button>
+      </div>
+
+      <div class="saving-wrap" *ngIf="isSaving">
+        <dx-load-indicator [visible]="true"></dx-load-indicator>
+        <span>Saving...</span>
+      </div>
+
+    </div>
+  </dx-popup>
+
+
+  <!-- ── TOAST ────────────────────────────────── -->
+  <dx-toast
+    [(visible)]="toastVisible"
+    [message]="toastMessage"
+    [type]="toastType"
+    [displayTime]="4000"
+    position="top center">
+  </dx-toast>
+
+</div>

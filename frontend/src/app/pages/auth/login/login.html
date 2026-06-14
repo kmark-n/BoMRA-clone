@@ -1,0 +1,72 @@
+<div class="auth-wrapper">
+
+  <!-- Logo -->
+  <div class="auth-logo">
+    <img src="assets/images/BRIMS_logo.png" alt="BRIMS Logo" />
+    <h2>BoMRA Regulatory Information Management System</h2>
+  </div>
+
+  <!-- Login Card -->
+  <div class="auth-card">
+
+    <h3 class="auth-title">Sign In</h3>
+    <p class="auth-subtitle">Enter your credentials to access the system</p>
+
+    <!-- Email -->
+    <div class="field-group">
+      <label>Email Address</label>
+      <dx-text-box
+        [(value)]="formData.email"
+        placeholder="Enter your email"
+        mode="email"
+        stylingMode="outlined"
+        width="100%">
+      </dx-text-box>
+    </div>
+
+    <!-- Password -->
+    <div class="field-group">
+      <label>Password</label>
+      <dx-text-box
+        [(value)]="formData.password"
+        placeholder="Enter your password"
+        mode="password"
+        stylingMode="outlined"
+        width="100%">
+      </dx-text-box>
+    </div>
+
+    <!-- Login Button -->
+    <dx-button
+      text="Sign In"
+      type="default"
+      stylingMode="contained"
+      (onClick)="onLogin()"
+      [disabled]="isLoading"
+      width="100%">
+    </dx-button>
+
+    <!-- Loading -->
+    <div class="loading-wrapper" *ngIf="isLoading">
+      <dx-load-indicator [visible]="true"></dx-load-indicator>
+      <span>Signing in...</span>
+    </div>
+
+    <!-- Register Link -->
+    <div class="auth-footer">
+      <span>Don't have an account?</span>
+      <a routerLink="/register">Create one here</a>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <dx-toast
+    [(visible)]="toastVisible"
+    [message]="toastMessage"
+    [type]="toastType"
+    [displayTime]="4000"
+    position="top center">
+  </dx-toast>
+
+</div>

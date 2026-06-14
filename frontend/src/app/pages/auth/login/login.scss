@@ -1,0 +1,114 @@
+.auth-wrapper {
+  min-height: 100vh;
+  background: #f0f4f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+// Logo
+.auth-logo {
+  text-align: center;
+  margin-bottom: 24px;
+
+  img {
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 15px;
+    color: #1a4a8a;
+    font-weight: bold;
+    max-width: 340px;
+    line-height: 1.4;
+  }
+}
+
+// Card
+.auth-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 36px;
+  width: 100%;
+  max-width: 420px;
+}
+
+// Title
+.auth-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1a4a8a;
+  margin: 0 0 6px 0;
+  text-align: center;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+  margin: 0 0 24px 0;
+}
+
+// Field
+.field-group {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #444;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+}
+
+// Loading
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #666;
+}
+
+// Footer
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+
+  a {
+    color: #1a4a8a;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 4px;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// DevExtreme overrides
+::ng-deep {
+  .dx-texteditor.dx-editor-outlined {
+    border-radius: 4px !important;
+  }
+
+  .dx-button.dx-button-default {
+    background: #1a4a8a !important;
+    border-color: #1a4a8a !important;
+    border-radius: 4px !important;
+    margin-top: 8px;
+
+    .dx-button-text {
+      font-size: 14px !important;
+      font-weight: bold !important;
+    }
+  }
+}

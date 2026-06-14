@@ -1,0 +1,148 @@
+<header class="bomra-header">
+  <!-- TOP ROW -->
+  <div class="top-row">
+
+    <div class="logo-cell">
+      <img src="assets/images/Bomra_logo.png" alt="BoMRA Logo" class="logo" />
+    </div>
+
+    <div class="middle-cell">
+      <div class="ticker-wrap">
+        <div class="ticker-content">
+          <span class="hours">Operating Hours - Monday to Friday (8am - 5pm).</span>
+        </div>
+      </div>
+
+      <dx-button icon="search" stylingMode="contained" type="normal"></dx-button>
+    </div>
+    <a routerLink="/login" class="rims-link">
+      <div class="right-cell">
+        <img src="assets/images/BRIMS_logo.png" alt="RIMS" class="rims-icon" />
+        <span class="rims-text">BoMRA Regulatory Information Management System</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- NAV ROW -->
+  <nav class="nav-row">
+    <div class="nav-links">
+
+      <!-- Digital Services -->
+      <div class="nav-item"
+           (mouseenter)="toggleDropdown('digital')"
+           (mouseleave)="closeDropdown()">
+
+        <a routerLink="/digital-services">Digital Services <span>▾</span></a>
+
+        <div class="dropdown" *ngIf="openDropdown === 'digital'">
+
+          <div class="drop-col">
+            <h4>Registration</h4>
+            <ul>
+              <li *ngFor="let item of digitalServices.registration">
+                <span class="arrow">▶</span>
+                <a [routerLink]="item.route">{{ item.label }}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="drop-col">
+            <h4>Repositories</h4>
+            <ul>
+              <li *ngFor="let item of digitalServices.repositories">
+                <span class="arrow">▶</span>
+                <a [routerLink]="item.route">{{ item.label }}</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <!-- End Digital Services -->
+
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- Image Slider -->
+  <section class="slider-section">
+    <dx-gallery
+      [dataSource]="slides"
+      [height]="340"
+      [loop]="true"
+      [showNavButtons]="true"
+      [showIndicator]="true"
+      [slideshowDelay]="4000"
+      itemTemplate="slideTemplate">
+      <div *dxTemplate="let slide of 'slideTemplate'">
+        <img [src]="slide.imageSrc" [alt]="slide.alt" class="slide-image" />
+      </div>
+    </dx-gallery>
+  </section>
+
+  <!-- Strategic Stakeholders -->
+  <section class="section stakeholders-section">
+    <h2 class="section-title">Our Strategic Stakeholders</h2>
+    <div class="stakeholders-grid">
+      <div class="stakeholder" *ngFor="let s of stakeholders">
+        <img [src]="s.logo" [alt]="s.name" class="stakeholder-logo" />
+        <span>{{ s.name }}</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <!-- Footer Info Section -->
+  <section class="footer-info">
+
+    <!-- Background -->
+    <div class="footer-col">
+      <h3>Background</h3>
+      <p>
+        The Medicines Regulatory Authority ("Authority") is a corporate body
+        established under Section 3 of the Medicines and Related Substances
+        Act ("MRSA") and referred to as the Botswana Medicines Regulatory
+        Authority or BoMRA. The Authority is responsible for ensuring the
+        safety, efficacy, and quality of medicines and related substances,
+        including human and veterinary medicines, medical devices, and
+        cosmetics in Botswana.
+      </p>
+      <img src="assets/images/Bomra_logo.png" alt="BoMRA" class="footer-logo" />
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul class="quick-links">
+        <li *ngFor="let link of quickLinks">
+          <span class="link-icon">&#10148;</span>
+          <a [routerLink]="link.route">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Our Locations -->
+    <div class="footer-col">
+      <h3>Our Locations</h3>
+      <p class="scan-label">Scan Here</p>
+    </div>
+
+    <!-- Get In Touch -->
+    <div class="footer-col">
+      <h3>Get In Touch</h3>
+      <div class="contact-item">
+        <i class="dx-icon-email"></i>
+        <span>info@bomra.co.bw</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>&#169; 2026 Botswana Medicines Regulatory Authority. All Rights Reserved</p>
+  </div>
+</footer>

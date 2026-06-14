@@ -1,0 +1,44 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+/* ── DxButton: hamburger inside dark header ── */
+.menu-btn.dx-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-width: 36px;
+
+  .dx-icon {
+    color: #fff !important;
+    font-size: 20px;
+  }
+
+  &.dx-state-hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-radius: 4px;
+  }
+}
+
+/* ── DxDrawer fills its container ── */
+.app-drawer.dx-drawer {
+  height: 100%;
+}
+
+/* ── DxTreeView transparent background ── */
+.nav-tree.dx-treeview {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ── DxScrollView fills height ── */
+.main-scroll-view.dx-scrollview {
+  height: 100%;
+}

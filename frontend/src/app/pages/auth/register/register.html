@@ -1,0 +1,84 @@
+<div class="auth-wrapper">
+
+  <!-- Logo -->
+  <div class="auth-logo">
+    <img src="assets/images/BRIMS_logo.png" alt="BRIMS Logo" />
+    <h2>BoMRA Regulatory Information Management System</h2>
+  </div>
+
+  <!-- Register Card -->
+  <div class="auth-card">
+
+    <h3 class="auth-title">Create Account</h3>
+    <p class="auth-subtitle">Register to access the MIS system</p>
+
+    <!-- Email -->
+    <div class="field-group">
+      <label>Email Address</label>
+      <dx-text-box
+        [(value)]="formData.email"
+        placeholder="Enter your email"
+        mode="email"
+        stylingMode="outlined"
+        width="100%">
+      </dx-text-box>
+    </div>
+
+    <!-- Password -->
+    <div class="field-group">
+      <label>Password</label>
+      <dx-text-box
+        [(value)]="formData.password"
+        placeholder="Minimum 8 characters"
+        mode="password"
+        stylingMode="outlined"
+        width="100%">
+      </dx-text-box>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="field-group">
+      <label>Confirm Password</label>
+      <dx-text-box
+        [(value)]="formData.password_confirmation"
+        placeholder="Repeat your password"
+        mode="password"
+        stylingMode="outlined"
+        width="100%">
+      </dx-text-box>
+    </div>
+
+    <!-- Register Button -->
+    <dx-button
+      text="Create Account"
+      type="default"
+      stylingMode="contained"
+      (onClick)="onRegister()"
+      [disabled]="isLoading"
+      width="100%">
+    </dx-button>
+
+    <!-- Loading -->
+    <div class="loading-wrapper" *ngIf="isLoading">
+      <dx-load-indicator [visible]="true"></dx-load-indicator>
+      <span>Creating your account...</span>
+    </div>
+
+    <!-- Login Link -->
+    <div class="auth-footer">
+      <span>Already have an account?</span>
+      <a routerLink="/login">Sign in here</a>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <dx-toast
+    [(visible)]="toastVisible"
+    [message]="toastMessage"
+    [type]="toastType"
+    [displayTime]="4000"
+    position="top center">
+  </dx-toast>
+
+</div>

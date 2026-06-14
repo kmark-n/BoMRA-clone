@@ -1,0 +1,222 @@
+<div class="page-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <a routerLink="/" class="back-link">&#8592; Back to Home</a>
+      <h1>Stakeholder Registration</h1>
+      <p>
+        Complete the form below to register as a BoMRA stakeholder.
+        Your application will be reviewed and you will be notified via email.
+      </p>
+    </div>
+  </div>
+
+  <!-- Form Container -->
+  <div class="form-container">
+    <div class="form-card">
+
+      <!-- Steps Indicator -->
+      <div class="steps-indicator">
+        <div class="step">
+          <span class="step-number">1</span>
+          <span class="step-label">Company Info</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <span class="step-label">Contact Details</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-label">Product Info</span>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <dx-form
+        #stakeholderForm
+        [formData]="formData"
+        [showColonAfterLabel]="true"
+        labelLocation="top"
+        [colCount]="2">
+
+        <!-- SECTION 1: Company Information -->
+        <dxi-item
+          itemType="group"
+          caption="Company Information"
+          [colSpan]="2"
+          [colCount]="2">
+
+          <dxi-item
+            dataField="company_name"
+            [colSpan]="1">
+            <dxo-label text="Company Name"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Company name is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="registration_number"
+            [colSpan]="1">
+            <dxo-label text="Registration Number"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Registration number is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="physical_address"
+            editorType="dxTextArea"
+            [editorOptions]="{ height: 80 }"
+            [colSpan]="2">
+            <dxo-label text="Physical Address"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Physical address is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+        </dxi-item>
+
+        <!-- SECTION 2: Contact Details -->
+        <dxi-item
+          itemType="group"
+          caption="Contact Details"
+          [colSpan]="2"
+          [colCount]="2">
+
+          <dxi-item
+            dataField="contact_person"
+            [colSpan]="1">
+            <dxo-label text="Contact Person"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Contact person is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="phone"
+            [colSpan]="1">
+            <dxo-label text="Phone Number"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Phone number is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="email"
+            [colSpan]="2">
+            <dxo-label text="Email Address"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Email is required">
+            </dxi-validation-rule>
+            <dxi-validation-rule
+              type="email"
+              message="Enter a valid email address">
+            </dxi-validation-rule>
+          </dxi-item>
+
+        </dxi-item>
+
+        <!-- SECTION 3: Product Information -->
+        <dxi-item
+          itemType="group"
+          caption="Product Information"
+          [colSpan]="2"
+          [colCount]="2">
+
+          <dxi-item
+            dataField="stakeholder_type"
+            editorType="dxSelectBox"
+            [editorOptions]="{
+              items: stakeholderTypes,
+              placeholder: 'Select stakeholder type'
+            }"
+            [colSpan]="1">
+            <dxo-label text="Stakeholder Type"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Stakeholder type is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="product_category"
+            editorType="dxSelectBox"
+            [editorOptions]="{
+              items: productCategories,
+              placeholder: 'Select product category'
+            }"
+            [colSpan]="1">
+            <dxo-label text="Product Category"></dxo-label>
+            <dxi-validation-rule
+              type="required"
+              message="Product category is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            dataField="notes"
+            editorType="dxTextArea"
+            [editorOptions]="{
+              height: 100,
+              placeholder: 'Any additional information (optional)...'
+            }"
+            [colSpan]="2">
+            <dxo-label text="Additional Notes (Optional)"></dxo-label>
+          </dxi-item>
+
+        </dxi-item>
+
+      </dx-form>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+
+        <dx-button
+          text="Submit Application"
+          type="default"
+          stylingMode="contained"
+          (onClick)="onSubmit()"
+          [disabled]="isLoading"
+          width="220">
+        </dx-button>
+
+        <dx-button
+          text="Clear Form"
+          type="normal"
+          stylingMode="outlined"
+          (onClick)="resetForm()"
+          [disabled]="isLoading"
+          width="130">
+        </dx-button>
+
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="loading-wrapper" *ngIf="isLoading">
+        <dx-load-indicator [visible]="true"></dx-load-indicator>
+        <span>Submitting your application...</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <dx-toast
+    [(visible)]="toastVisible"
+    [message]="toastMessage"
+    [type]="toastType"
+    [displayTime]="5000"
+    position="top center">
+  </dx-toast>
+
+</div>
